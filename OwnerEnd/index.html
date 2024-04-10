@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>被观看端</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      #local-video {
+        width: 500px;
+        height: 300px;
+        margin: 10px;
+        border: 1px solid #000;
+      }
+
+      .controls {
+        width: 520px;
+        height: 200px;
+        border-top: 1px dotted #000;
+        padding: 10px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .server,
+      .offer,
+      .answer,
+      .local-candidate,
+      .remote-candidate {
+        display: flex;
+        gap: 10px;
+        background-color: #f4f4f4;
+      }
+
+      span {
+        font-size: 12px;
+        color: red;
+        align-self: center;
+      }
+    </style>
+    <script src="./main.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <video id="local-video" autoplay muted></video>
+
+      <div class="controls">
+        <div class="server">
+          <textarea></textarea>
+          <button onclick="createPC()">创建RTCPeerConnection对象</button>
+          <span>在代码中修改此项配置</span>
+        </div>
+
+        <div class="offer">
+          <textarea placeholder="这里填写对方的SDP信息"></textarea>
+          <button onclick="handleOfferSDP()">接收并处理远程SDP</button>
+          <span>remote-offer-sdp</span>
+        </div>
+
+        <div class="answer">
+          <button onclick="createAnswerSDP()">创建并处理本地SDP</button>
+          <textarea
+            placeholder="点击创建并处理本地SDP，此处生成SDP内容"
+          ></textarea>
+          <button onclick="copyText('.answer textarea')">复制内容</button>
+          <span>local-answer-sdp</span>
+        </div>
+
+        <div class="local-candidate">
+          <textarea placeholder="本地收集的candidate信息"></textarea>
+          <button onclick="copyText('.local-candidate textarea')">
+            复制内容
+          </button>
+          <span>local-candidate</span>
+        </div>
+
+        <div class="remote-candidate">
+          <textarea placeholder="这里填写对方的candidate"></textarea>
+          <button onclick="handleCandidate()">接受并处理远程candidate</button>
+          <span>remote-candidate</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
